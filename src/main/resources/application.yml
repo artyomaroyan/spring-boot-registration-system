@@ -1,0 +1,88 @@
+spring:
+  # Oauth2
+  security:
+    oauth2:
+      client:
+        registration:
+          github:
+            client-id: ${GITHUB_CLIENT_ID}
+            client-secret: ${GITHUB_CLIENT_ID}
+  # Flyway
+  flyway:
+    enabled: true
+    baseline-on-migrate: true
+    schemas: registration_db
+    # Database
+  datasource:
+    url: jdbc:postgresql://localhost:5432/registration_system
+    username: postgres
+    password: root
+    driver-class-name: org.postgresql.Driver
+  jpa:
+    properties:
+      hibernate:
+        default_schema: registration_db
+        format_sql: true
+    hibernate:
+      ddl-auto: validate
+    show-sql: false
+    open-in-view: false
+    # Email
+  mail:
+    default-encoding: UTF-8
+    host: smtp.gmail.com
+    port: 587
+    username: ${MAIL_USERNAME}
+    password: qfgk mzmf bxhj beiz
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+            required: true
+            debug: true
+    protocol: smtp
+# Logging
+logging:
+  level:
+    io:
+      jsonwebtoken: trace
+    web: info
+    sql: info
+    root: info
+    org:
+      hibernate.sql: info
+      springframework: info
+      springframework.core: info
+      springframework.security: trace
+      springframework.security.web: trace
+      springframework.security.oauth2: trace
+      springframework.security.web.access.intercept: trace
+      springframework.security.web.FilterChainProxy: trace
+    org.springframework.security.config.annotation.authentication.configuration.InitializeUserDetailsBeanManagerConfigurer: ERROR
+
+# Security properties
+application:
+  security:
+    argon2:
+      memory: 65536 # Use 64 MB of memory
+      iterations: 3 # Run 3 iterations
+      parallelism: 2 # Use 2 threads
+      hashLength: 64 # Generate a 64 byte (512 bit) hash
+      saltLength: 64 # Generate a 64 byte (512 bit) salt
+      secretKey: ${ARGON2_SECRET_KEY}
+
+    jwt:
+      keyStorePath: /private/etc/.keys/ec_keystore.p12
+      keyStorePassword: ${KEYSTORE_PASSWORD}
+      keyStoreAlias: ${KEYSTORE_ALIAS}
+      expiration: 720 # 12 hours
+
+    passwordResetToken:
+      secret: ${PASSWORD_RESET_TOKEN_SECRET}
+      expiration: 3 # minutes
+
+    emailVerificationToken:
+      secret: ${EMAIL_VERIFICATION_TOKEN_SECRET}
+      expiration: 15 # minutes
