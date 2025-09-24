@@ -1,4 +1,6 @@
 spring:
+  application:
+    name: UserOnboarding
   # Oauth2
   security:
     oauth2:
@@ -74,7 +76,7 @@ application:
       secretKey: ${ARGON2_SECRET_KEY}
 
     jwt:
-      keyStorePath: /private/etc/.keys/ec_keystore.p12
+      keyStorePath: /Users/artyom_aroyan/.keys/.registrationapp/ec_keystore.p12
       keyStorePassword: ${KEYSTORE_PASSWORD}
       keyStoreAlias: ${KEYSTORE_ALIAS}
       expiration: 720 # 12 hours
